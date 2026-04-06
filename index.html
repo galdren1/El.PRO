@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Электрокалькулятор PRO (ПУЭ-7)</title>
+	<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+	<div class="app-container">
+		<header class="app-header">
+			<h1>Электрокалькулятор PRO</h1>
+			<p>Расчёты по ПУЭ-7 для электромонтажника</p>
+		</header>
+
+		<nav class="tabs" role="tablist">
+			<button class="tab active" data-tab="cable" role="tab" aria-selected="true">Расчёт кабеля</button>
+			<button class="tab" data-tab="automat" role="tab" aria-selected="false">Выбор автомата</button>
+			<button class="tab" data-tab="grounding" role="tab" aria-selected="false">Расчёт заземления</button>
+			<button class="tab" data-tab="short" role="tab" aria-selected="false">Проверка на КЗ</button>
+		</nav>
+
+		<main class="tab-content-wrapper">
+			<!-- Вкладка: Расчёт кабеля -->
+			<section id="cable" class="tab-panel active" role="tabpanel">
+				<h2>Расчёт сечения по нагреву (ПУЭ 1.3)</h2>
+				<form id="cableForm">
+					<div class="input-group">
+						<label for="powerKw">Мощность нагрузки, кВт</label>
+						<input type="number" id="powerKw" name="powerKw" step="0.1" required>
+          </div>
+						<div class="input-group">
+							<label for="voltage">Напряжение, В</label>
+							<select id="voltage" name="voltage">
+              <option value="220">220 (1 фаза)</option>
+              <option value="380">380 (3 фазы)</option>
+            </select>
+						</div>
+						<div class="input-group">
+							<label for="cosPhi">cos φ</label>
+							<input type="number" id="cosPhi" name="cosPhi" value="0.9" step="0.01" min="0.6" max="1">
+          </div>
+							<div class="input-group">
+								<label for="material">Материал жилы</label>
+								<select id="material" name="material">
+              <option value="cu">Медь</option>
+              <option value="al">Алюминий</option>
+            </select>
+							</div>
+							<div class="input-group">
+								<label for="laying">Способ прокладки</label>
+								<select id="laying" name="laying">
+              <option value="open">Открыто</option>
+              <option value="pipe">В трубе</option>
+              <option value="tray">В коробе</option>
+            </select>
+							</div>
+							<button type="submit">Рассчитать сечение</button>
+				</form>
+				<div id="cableResult" class="result-box"></div>
+			</section>
+
+			<!-- Вкладка: Выбор автомата -->
+			<section id="automat" class="tab-panel" role="tabpanel">
+				<h2>Подбор автоматического выключателя (ПУЭ 3.1)</h2>
+				<form id="automatForm">
+					<div class="input-group">
+						<label for="automatPowerKw">Мощность нагрузки, кВт</label>
+						<input type="number" id="automatPowerKw" name="automatPowerKw" step="0.1" required>
+          </div>
+						<div class="input-group">
+							<label for="automatVoltage">Напряжение, В</label>
+							<select id="automatVoltage" name="automatVoltage">
+              <option value="220">220 (1 фаза)</option>
+              <option value="380">380 (3 фазы)</option>
+            </select>
+						</div>
+						<div class="input-group">
+							<label for="automatCosPhi">cos φ</label>
+							<input type="number" id="automatCosPhi" name="automatCosPhi" value="0.9" step="0.01" min="0.6" max="1">
+          </div>
+							<div class="input-group">
+								<label for="loadType">Тип нагрузки</label>
+								<select id="loadType" name="loadType">
+              <option value="lighting">Освещение</option>
+              <option value="general">Смешанная</option>
+              <option value="motors">Двигатели</option>
+            </select>
+							</div>
+							<button type="submit">Подобрать автомат</button>
+				</form>
+				<div id="automatResult" class="result-box"></div>
+			</section>
+
+			<!-- Вкладка: Расчёт заземления -->
+			<section id="grounding" class="tab-panel" role="tabpanel">
+				<h2>Расчёт заземления (ПУЭ 1.7)</h2>
+				<form id="groundingForm">
+					<div class="input-group">
+						<label for="soilResistivity">Удельное сопротивление грунта, Ом·м</label>
+						<input type="number" id="soilResistivity" name="soilResistivity" value="100" required>
+          </div>
+						<div class="input-group">
+							<label for="groundingType">Тип заземлителя</label>
+							<select id="groundingType" name="groundingType">
+              <option value="rod">Вертикальный стержень</option>
+              <option value="strip">Горизонтальная полоса</option>
+            </select>
+						</div>
+						<button type="submit">Рассчитать заземление</button>
+				</form>
+				<div id="groundingResult" class="result-box"></div>
+			</section>
+
+			<!-- Вкладка: Проверка на КЗ -->
+			<section id="short" class="tab-panel" role="tabpanel">
+				<h2>Проверка на короткое замыкание</h2>
+				<form id="shortForm">
+					<div class="input-group">
+						<label for="transformerPower">Мощность трансформатора, кВА</label>
+						<input type="number" id="transformerPower" name="transformerPower" value="250" required>
+          </div>
+						<div class="input-group">
+							<label for="systemVoltage">Напряжение сети, В</label>
+							<input type="number" id="systemVoltage" name="systemVoltage" value="400" required>
+          </div>
+							<button type="submit">Проверить на КЗ</button>
+				</form>
+				<div id="shortResult" class="result-box"></div>
+			</section>
+		</main>
+
+		<!-- Кнопка обратной связи -->
+		<button id="openFeedback" class="btn-feedback">Обратная связь</button>
+
+		<!-- Модальное окно обратной связи -->
+		<div id="feedbackModal" class="modal">
+			<div class="modal-content">
+				<span class="close">&times;</span>
+				<h3>Обратная связь</h3>
+				<form id="feedbackForm">
+					<div class="input-group">
+						<label for="feedbackType">Тип обращения</label>
+						<select id="feedbackType" name="feedbackType" required>
+              <option value="">Выберите тип</option>
+              <option value="bug">Сообщение об ошибке</option>
+              <option value="feature">Предложение функции</option>
+              <option value="question">Вопрос</option>
+            </select>
+					</div>
+					<div class="input-group">
+						<label for="userName">Ваше имя</label>
+						<input type="text" id="userName" name="userName" required>
+          </div>
+						<div class="input-group">
+							<label for="userEmail">Email для ответа</label>
+							<input type="email" id="userEmail" name="userEmail" required>
+          </div>
+							<div class="input-group">
+								<label for="feedbackMessage">Сообщение</label>
+								<textarea id="feedbackMessage" name="feedbackMessage" rows="4" required></textarea>
+							</div>
+							<button type="submit">Отправить</button>
+				</form>
+			</div>
+			</div>
+			<div id="feedbackResult" class="result-box"></div>
+			</div>
+			</div>
+			
+			<script src="script.js"></script>
+			</body>
+			
+			</html>
