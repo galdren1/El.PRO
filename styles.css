@@ -1,0 +1,319 @@
+/* Сброс стилей и базовые настройки */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* Нейтральная цветовая палитра */
+  --color-bg: #f8f9fa;
+  --color-surface: #ffffff;
+  --color-text: #2d3748;
+  --color-text-secondary: #718096;
+  --color-border: #e2e8f0;
+  --color-accent: #4a5568;
+  --color-primary: #2c5282;
+  --color-success: #38a169;
+  --color-warning: #d69e2e;
+  --color-error: #c53030;
+  --color-hover: #edf2f7;
+  --border-radius: 8px;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.07);
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+.app-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+/* Шапка приложения */
+.app-header {
+  text-align: center;
+  margin-bottom: 32px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.app-header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: 8px;
+}
+
+.app-header p {
+  color: var(--color-text-secondary);
+  font-size: 1rem;
+}
+
+/* Навигация — вкладки */
+.tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+  background: var(--color-surface);
+  border-radius: var(--border-radius);
+  padding: 4px;
+  box-shadow: var(--shadow-sm);
+}
+
+.tab {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: var(--transition);
+  background: transparent;
+  color: var(--color-text-secondary);
+  flex: 1;
+  text-align: center;
+}
+
+.tab:hover {
+  background: var(--color-hover);
+  color: var(--color-accent);
+}
+
+.tab.active {
+  background: var(--color-primary);
+  color: white;
+  box-shadow: var(--shadow);
+}
+
+/* Контент вкладок */
+.tab-content-wrapper {
+  display: grid;
+  gap: 24px;
+}
+
+.tab-panel {
+  display: none;
+  background: var(--color-surface);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  padding: 24px;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.tab-panel.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Формы и элементы ввода */
+.input-group {
+  margin-bottom: 20px;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: var(--color-accent);
+}
+
+.input-group input,
+.input-group select,
+.input-group textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  transition: var(--transition);
+  background: white;
+  font-family: inherit;
+}
+
+.input-group input:focus,
+.input-group select:focus,
+.input-group textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(44, 82, 130, 0.1);
+}
+
+/* Кнопки */
+button {
+  padding: 12px 24px;
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-weight: 600;
+  transition: var(--transition);
+  font-family: inherit;
+}
+
+button:hover {
+  background: #1a3e6b;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+/* Результаты */
+.result-box {
+  padding: 20px;
+  border-radius: var(--border-radius);
+  margin-top: 20px;
+  display: none;
+}
+
+.result-success {
+  background: rgba(56, 161, 105, 0.1);
+  border-left: 4px solid var(--color-success);
+}
+
+.result-warning {
+  background: rgba(214, 158, 46, 0.1);
+  border-left: 4px solid var(--color-warning);
+}
+
+.result-error {
+  background: rgba(197, 48, 48, 0.1);
+  border-left: 4px solid var(--color-error);
+}
+
+/* Модальное окно */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.modal.show {
+  display: block;
+}
+
+.modal-content {
+  background: var(--color-surface);
+  margin: 5% auto;
+  padding: 30px;
+  border-radius: var(--border-radius);
+  max-width: 500px;
+  box-shadow: var(--shadow-lg);
+  animation: modalFadeIn 0.3s ease-out;
+  position: relative;
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.close {
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  font-size: 24px;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--color-accent);
+  transition: var(--transition);
+}
+
+.close:hover {
+  color: var(--color-primary);
+  transform: rotate(90deg);
+}
+
+/* Кнопка обратной связи */
+.btn-feedback {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 50px;
+  cursor: pointer;
+  z-index: 1000;
+  font-weight: 600;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+  font-family: inherit;
+}
+
+.btn-feedback:hover {
+  background: #1a3e6b;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.btn-feedback:active {
+  transform: translateY(0);
+}
+
+/* Стили для полей с ошибками */
+.input-error {
+  border-color: var(--color-error) !important;
+  box-shadow: 0 0 0 3px rgba(197, 48, 48, 0.1) !important;
+}
+
+/* Состояние загрузки кнопки */
+button.loading {
+  background: var(--color-warning);
+  cursor: not-allowed;
+}
+
+button.loading:hover {
+  transform: none;
+  box-shadow: var(--shadow);
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .app-container {
+    padding: 16px;
+  }
+
+  .tabs {
+    flex-direction: column;
+  }
+
+  .tab {
+    text-align: left;
+  }
+
+  .modal-content {
+    margin: 10% auto;
+    max-width: 90%;
+    padding: 20px;
+  }
+
+  .btn-feedback {
+    bottom: 15px;
+    right: 15px;
+    padding: 12px 24px;
+  }
+}
